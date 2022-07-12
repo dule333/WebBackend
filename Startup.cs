@@ -14,7 +14,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebBackend.Infrastructure;
+using WebBackend.Interfaces;
 using WebBackend.Mapping;
+using WebBackend.Services;
 
 namespace WebBackend
 {
@@ -37,7 +39,8 @@ namespace WebBackend
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebBackend", Version = "v1" });
             });
 
-
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IOrderService, OrderService>();
             services.AddDbContext<DeliveryContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DeliveryDatabase")));
             var mapperConfig = new MapperConfiguration(mc =>
             {

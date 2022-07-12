@@ -12,11 +12,13 @@ namespace WebBackend.Infrastructure.Configurations
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
             builder.HasOne(x => x.Customer)
-                .WithOne(x => x.DeliveryCustomer)
-                .HasForeignKey<Order>(x=>x.CustomerId)
+                .WithMany(x=>x.Orders)
+                .HasForeignKey(x=>x.CustomerId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            
+            builder.HasOne(x => x.Postal)
+                .WithMany(x => x.Deliveries)
+                .HasForeignKey(x => x.PostalId);
         }
     }
 }

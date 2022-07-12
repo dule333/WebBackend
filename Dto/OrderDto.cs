@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using WebBackend.Models;
+using System;
 
 namespace WebBackend.Dto
 {
@@ -10,5 +11,6 @@ namespace WebBackend.Dto
         public double TotalPrice { get; set; }
         public List<OrderProduct> OrderProducts { get; set; }
         public DeliveryStatus DeliveryStatus { get; set; }
+        public DateTime EndTime { get; set; }
     }
 }

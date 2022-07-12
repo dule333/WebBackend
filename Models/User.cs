@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace WebBackend.Models
 {
@@ -27,7 +28,7 @@ namespace WebBackend.Models
         public string ImageURI { get; set; }
         public bool IsVerified { get; set; } = false;
         public VerificationType VerificationProgress { get; set; }
-        public Order Delivery { get; set; }
-        public Order DeliveryCustomer { get; set; }
+        public List<Order> Deliveries { get; set; }
+        public List<Order> Orders { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace WebBackend.Models
 {
@@ -20,5 +21,6 @@ namespace WebBackend.Models
         public ICollection<Product> Products { get; set; }
         public List<OrderProduct> OrderProducts { get; set; }
         public DeliveryStatus DeliveryStatus { get; set; }
+        public DateTime EndTime { get; set; }
     }
 }

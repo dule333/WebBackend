@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebBackend.Models;
+using WebBackend.Dto;
 
 namespace WebBackend.Infrastructure
 {
@@ -34,5 +35,9 @@ namespace WebBackend.Infrastructure
                     op.HasKey(x => new { x.OrderId, x.ProductId });
                 });
         }
+
+        public DbSet<WebBackend.Dto.ProductDto> ProductDto { get; set; }
+
+        public DbSet<WebBackend.Dto.OrderDto> OrderDto { get; set; }
     }
 }

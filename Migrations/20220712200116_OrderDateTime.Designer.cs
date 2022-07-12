@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebBackend.Infrastructure;
 
 namespace WebBackend.Migrations
 {
     [DbContext(typeof(DeliveryContext))]
-    partial class DeliveryContextModelSnapshot : ModelSnapshot
+    [Migration("20220712200116_OrderDateTime")]
+    partial class OrderDateTime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,9 +69,11 @@ namespace WebBackend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("CustomerId")
+                        .IsUnique();
 
-                    b.HasIndex("PostalId");
+                    b.HasIndex("PostalId")
+                        .IsUnique();
 
                     b.ToTable("Orders");
                 });
@@ -158,15 +162,15 @@ namespace WebBackend.Migrations
             modelBuilder.Entity("WebBackend.Models.Order", b =>
                 {
                     b.HasOne("WebBackend.Models.User", "Customer")
-                        .WithMany("Orders")
-                        .HasForeignKey("CustomerId")
+                        .WithOne("DeliveryCustomer")
+                        .HasForeignKey("WebBackend.Models.Order", "CustomerId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("WebBackend.Models.User", "Postal")
-                        .WithMany("Deliveries")
-                        .HasForeignKey("PostalId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithOne("Delivery")
+                        .HasForeignKey("WebBackend.Models.Order", "PostalId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Customer");
@@ -205,9 +209,9 @@ namespace WebBackend.Migrations
 
             modelBuilder.Entity("WebBackend.Models.User", b =>
                 {
-                    b.Navigation("Deliveries");
+                    b.Navigation("Delivery");
 
-                    b.Navigation("Orders");
+                    b.Navigation("DeliveryCustomer");
                 });
 #pragma warning restore 612, 618
         }
