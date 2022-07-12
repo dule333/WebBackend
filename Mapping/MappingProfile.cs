@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using WebBackend.Dto;
+using WebBackend.Models;
 
 namespace WebBackend.Mapping
 {
@@ -6,7 +8,11 @@ namespace WebBackend.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<>
+            CreateMap<Order, OrderDto>().ReverseMap();
+            CreateMap<User, PostalDto>().ReverseMap();
+            CreateMap<User, RegisterDto>().ReverseMap();
+            CreateMap<User, LoginDto>().ReverseMap();
+            CreateMap<Product, ProductDto>().ReverseMap();
         }
     }
 }

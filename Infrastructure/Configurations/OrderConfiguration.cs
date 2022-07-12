@@ -12,7 +12,9 @@ namespace WebBackend.Infrastructure.Configurations
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
             builder.HasOne(x => x.Customer)
-                .WithOne(x => x.Delivery);
+                .WithOne(x => x.DeliveryCustomer)
+                .HasForeignKey<Order>(x=>x.CustomerId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             
         }

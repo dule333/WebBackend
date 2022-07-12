@@ -14,7 +14,9 @@ namespace WebBackend.Models
         public string Comment { get; set; }
         public double TotalPrice { get; set; }
         public User Customer { get; set; }
+        public int CustomerId { get; set; }
         public User Postal { get; set; }
+        public int PostalId { get; set; }
         public ICollection<Product> Products { get; set; }
         public List<OrderProduct> OrderProducts { get; set; }
         public DeliveryStatus DeliveryStatus { get; set; }

@@ -27,7 +27,7 @@ namespace WebBackend.Models
         public string ImageURI { get; set; }
         public bool IsVerified { get; set; } = false;
         public VerificationType VerificationProgress { get; set; }
-        public int DeliveryId { get; set; }
         public Order Delivery { get; set; }
+        public Order DeliveryCustomer { get; set; }
     }
 }
