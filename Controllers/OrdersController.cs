@@ -22,28 +22,42 @@ namespace WebBackend.Controllers
             _orderService = orderService;
         }
 
-        // GET: api/Orders
-        [HttpGet]
-        public IActionResult GetOrderDto()
+        [HttpGet("Customer/{id}")]
+        public IActionResult GetOrders(int id)
         {
-            throw new NotImplementedException();
+            return Ok(_orderService.GetOrders(id));
+        }
+        [HttpGet("Admin/{id}")]
+        public IActionResult GetOrdersAdmin(int id)
+        {
+            return Ok(_orderService.GetOrdersAdmin(id));
+        }
+        [HttpGet("Postal/{id}")]
+        public IActionResult GetOrdersPostal(int id)
+        {
+            return Ok(_orderService.GetOrdersPostal(id));
+        }
+        [HttpGet("PostalH/{id}")]
+        public IActionResult GetOrdersPostalH(int id)
+        {
+            return Ok(_orderService.GetOrdersPostalHistory(id));
         }
 
-        // GET: api/Orders/5
         [HttpGet("{id}")]
-        public IActionResult GetOrderDto(int id)
+        public IActionResult GetOrder(int id)
         {
-
-            throw new NotImplementedException();
+            return Ok(_orderService.GetOrder(id));
         }
 
-        // POST: api/Orders
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public IActionResult PostOrderDto(OrderDto orderDto)
+        public IActionResult PostOrderDto([FromBody]OrderDto orderDto, int userId)
         {
-
-            throw new NotImplementedException();
+            return Ok(_orderService.CreateOrder(orderDto, userId));
+        }
+        [HttpPost("Reserve/{postal}/{order}")]
+        public IActionResult ReserveOrder(int postal, int order)
+        {
+            return Ok(_orderService.ReserveOrder(postal, order));
         }
     }
 }

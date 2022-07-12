@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebBackend.Infrastructure;
 
 namespace WebBackend.Migrations
 {
     [DbContext(typeof(DeliveryContext))]
-    partial class DeliveryContextModelSnapshot : ModelSnapshot
+    [Migration("20220712204416_OrderProducts")]
+    partial class OrderProducts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,7 +85,7 @@ namespace WebBackend.Migrations
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("PostalId")
+                    b.Property<int>("PostalId")
                         .HasColumnType("int");
 
                     b.Property<double>("TotalPrice")
@@ -106,10 +108,15 @@ namespace WebBackend.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("OrderDtoId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.HasKey("ProductId", "OrderId");
+
+                    b.HasIndex("OrderDtoId");
 
                     b.HasIndex("OrderId");
 
@@ -189,7 +196,9 @@ namespace WebBackend.Migrations
 
                     b.HasOne("WebBackend.Models.User", "Postal")
                         .WithMany("Deliveries")
-                        .HasForeignKey("PostalId");
+                        .HasForeignKey("PostalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
 
@@ -198,6 +207,10 @@ namespace WebBackend.Migrations
 
             modelBuilder.Entity("WebBackend.Models.OrderProduct", b =>
                 {
+                    b.HasOne("WebBackend.Dto.OrderDto", null)
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("OrderDtoId");
+
                     b.HasOne("WebBackend.Models.Order", "Order")
                         .WithMany("OrderProducts")
                         .HasForeignKey("OrderId")
@@ -213,6 +226,11 @@ namespace WebBackend.Migrations
                     b.Navigation("Order");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("WebBackend.Dto.OrderDto", b =>
+                {
+                    b.Navigation("OrderProducts");
                 });
 
             modelBuilder.Entity("WebBackend.Models.Order", b =>

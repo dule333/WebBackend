@@ -19,21 +19,6 @@ namespace WebBackend.Infrastructure
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(DeliveryContext).Assembly);
 
-            modelBuilder.Entity<Order>()
-            .HasMany(x => x.Products)
-            .WithMany(x => x.Orders)
-            .UsingEntity<OrderProduct>(
-                op => op
-                    .HasOne(x => x.Product)
-                    .WithMany(x => x.OrderProducts)
-                    .HasForeignKey(x => x.ProductId),
-                op => op.HasOne(x => x.Order)
-                    .WithMany(x => x.OrderProducts)
-                    .HasForeignKey(x => x.OrderId),
-                op =>
-                {
-                    op.HasKey(x => new { x.OrderId, x.ProductId });
-                });
         }
 
         public DbSet<WebBackend.Dto.ProductDto> ProductDto { get; set; }

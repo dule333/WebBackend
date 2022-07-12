@@ -8,7 +8,6 @@ namespace WebBackend.Models
         public string Name { get; set; }
         public double UnitPrice { get; set; }
         public string Ingredients { get; set; }
-        public ICollection<Order> Orders { get; set; }
         public List<OrderProduct> OrderProducts { get; set; }
     }
 }

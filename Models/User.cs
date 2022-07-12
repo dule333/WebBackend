@@ -27,7 +27,7 @@ namespace WebBackend.Models
         public UserType UserType { get; set; }
         public string ImageURI { get; set; }
         public bool IsVerified { get; set; } = false;
-        public VerificationType VerificationProgress { get; set; }
+        public VerificationType VerificationProgress { get; set; } = VerificationType.Processing;
         public List<Order> Deliveries { get; set; }
         public List<Order> Orders { get; set; }
     }

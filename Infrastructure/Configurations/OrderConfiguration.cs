@@ -10,6 +10,7 @@ namespace WebBackend.Infrastructure.Configurations
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
+            builder.Property(x => x.PostalId).IsRequired(false);
 
             builder.HasOne(x => x.Customer)
                 .WithMany(x=>x.Orders)
@@ -18,7 +19,8 @@ namespace WebBackend.Infrastructure.Configurations
 
             builder.HasOne(x => x.Postal)
                 .WithMany(x => x.Deliveries)
-                .HasForeignKey(x => x.PostalId);
+                .HasForeignKey(x => x.PostalId)
+                .IsRequired(false);
         }
     }
 }

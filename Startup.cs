@@ -41,6 +41,7 @@ namespace WebBackend
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddDbContext<DeliveryContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DeliveryDatabase")));
             var mapperConfig = new MapperConfiguration(mc =>
             {
