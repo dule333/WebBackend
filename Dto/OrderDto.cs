@@ -10,6 +10,7 @@ namespace WebBackend.Dto
         public int Id { get; set; }
         public string Comment { get; set; }
         public double TotalPrice { get; set; }
+        public string Address { get; set; }
         [NotMapped]
         public Dictionary<int,int> products { get; set; }
         public DeliveryStatus DeliveryStatus { get; set; }

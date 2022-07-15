@@ -27,15 +27,15 @@ namespace WebBackend.Controllers
         {
             return Ok(_orderService.GetOrders(id));
         }
-        [HttpGet("Admin/{id}")]
-        public IActionResult GetOrdersAdmin(int id)
+        [HttpGet("Admin")]
+        public IActionResult GetOrdersAdmin()
         {
-            return Ok(_orderService.GetOrdersAdmin(id));
+            return Ok(_orderService.GetOrdersAdmin());
         }
-        [HttpGet("Postal/{id}")]
-        public IActionResult GetOrdersPostal(int id)
+        [HttpGet("Postal")]
+        public IActionResult GetOrdersPostal()
         {
-            return Ok(_orderService.GetOrdersPostal(id));
+            return Ok(_orderService.GetOrdersPostal());
         }
         [HttpGet("PostalH/{id}")]
         public IActionResult GetOrdersPostalH(int id)
@@ -54,10 +54,15 @@ namespace WebBackend.Controllers
         {
             return Ok(_orderService.CreateOrder(orderDto, userId));
         }
-        [HttpPost("Reserve/{postal}/{order}")]
+        [HttpGet("Reserve/{postal}/{order}")]
         public IActionResult ReserveOrder(int postal, int order)
         {
-            return Ok(_orderService.ReserveOrder(postal, order));
+            return Ok(_orderService.ReserveOrder(order, postal));
+        }
+        [HttpGet("Delivered/{order}")]
+        public IActionResult OrderDelivered(int order)
+        {
+            return Ok(_orderService.OrderDelivered(order));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using WebBackend.Dto;
 using WebBackend.Infrastructure;
@@ -20,6 +21,7 @@ namespace WebBackend.Services
 
         public OrderDto CreateOrder(OrderDto order, int id)
         {
+            Random random = new Random();
             Order newOrder = new Order
             {
                 Id = order.Id,
@@ -28,11 +30,12 @@ namespace WebBackend.Services
                 CustomerId = id,
                 Customer = _deliveryContext.Users.Find(id),
                 DeliveryStatus = DeliveryStatus.Free,
-                EndTime = order.EndTime,
+                EndTime = System.DateTime.Now.AddMinutes(random.Next(8,15)),
+                Address = order.Address,
                 OrderProducts = new List<OrderProduct>()
             };
 
-            foreach (var item in order.products)
+            foreach (var item in order.products)    
             {
                 OrderProduct orderProduct = new OrderProduct
                 {
@@ -63,15 +66,15 @@ namespace WebBackend.Services
             return _mapper.Map<List<OrderDto>>(orders.FindAll(x => x.CustomerId == id && x.DeliveryStatus == DeliveryStatus.Delivered));
         }
 
-        public List<OrderDto> GetOrdersAdmin(int id)
+        public List<OrderDto> GetOrdersAdmin()
         {
             return _mapper.Map<List<OrderDto>>(_deliveryContext.Orders);
         }
 
-        public List<OrderDto> GetOrdersPostal(int id)
+        public List<OrderDto> GetOrdersPostal()
         {
             List<Order> orders = _mapper.Map<List<Order>>(_deliveryContext.Orders);
-            return _mapper.Map<List<OrderDto>>(orders.FindAll(x => x.PostalId == id && x.DeliveryStatus == DeliveryStatus.Free));
+            return _mapper.Map<List<OrderDto>>(orders.FindAll(x => x.DeliveryStatus == DeliveryStatus.Free));
 
         }
 
@@ -88,6 +91,15 @@ namespace WebBackend.Services
             order.PostalId = postalId;
             order.Postal = _deliveryContext.Users.Find(postalId);
             order.DeliveryStatus = DeliveryStatus.InProgress;
+            _deliveryContext.SaveChanges();
+            return _mapper.Map<OrderDto>(order);
+        }
+        public OrderDto OrderDelivered(int orderId)
+        {
+            Order order = _deliveryContext.Orders.Find(orderId);
+            if(order == null)
+                return null;
+            order.DeliveryStatus = DeliveryStatus.Delivered;
             _deliveryContext.SaveChanges();
             return _mapper.Map<OrderDto>(order);
         }

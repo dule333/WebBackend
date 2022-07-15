@@ -22,6 +22,7 @@ namespace WebBackend
 {
     public class Startup
     {
+        private readonly string _cors = "cors";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -39,6 +40,17 @@ namespace WebBackend
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebBackend", Version = "v1" });
             });
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: _cors, builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+                });
+            }
+            );
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IUserService, UserService>();
@@ -63,6 +75,7 @@ namespace WebBackend
             }
 
             app.UseHttpsRedirection();
+            app.UseCors(_cors);
 
             app.UseRouting();
 

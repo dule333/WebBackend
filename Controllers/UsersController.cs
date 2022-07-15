@@ -28,6 +28,13 @@ namespace WebBackend.Controllers
             return Ok(_userService.GetUser(id));
         }
 
+
+        [HttpGet]
+        public IActionResult GetUsers()
+        {
+            return Ok(_userService.GetUsers());
+        }
+
         [HttpPost]
         public IActionResult CreateUser(RegisterDto registerDto)
         {
@@ -40,7 +47,7 @@ namespace WebBackend.Controllers
             return Ok(_userService.Login(loginDto));
         }
 
-        [HttpPost("verify")]
+        [HttpGet("verify")]
         public IActionResult VerifyPostal(int id, bool yes)
         {
             _userService.VerifyPostal(id, yes);

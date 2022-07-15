@@ -1,4 +1,5 @@
-﻿using WebBackend.Dto;
+﻿using System.Collections.Generic;
+using WebBackend.Dto;
 
 namespace WebBackend.Interfaces
 {
@@ -7,7 +8,8 @@ namespace WebBackend.Interfaces
         RegisterDto ChangeUser(RegisterDto newUser);
         RegisterDto CreateUser(RegisterDto newUser);
         RegisterDto GetUser(int id);
+        List<PostalDto> GetUsers();
         void VerifyPostal(int id, bool yes);
-        bool Login(LoginDto user);
+        string Login(LoginDto user);
     }
 }

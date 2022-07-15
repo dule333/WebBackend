@@ -14,6 +14,7 @@ namespace WebBackend.Models
         public int Id { get; set; }
         public string Comment { get; set; }
         public double TotalPrice { get; set; }
+        public string Address { get; set; }
         public User Customer { get; set; }
         public int CustomerId { get; set; }
         public User Postal { get; set; }

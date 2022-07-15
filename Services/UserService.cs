@@ -50,13 +50,19 @@ namespace WebBackend.Services
             return _mapper.Map<RegisterDto>(_deliveryContext.Users.Find(id));
         }
 
-        public bool Login(LoginDto user)
+        public List<PostalDto> GetUsers()
+        {
+            List<User> users = _mapper.Map<List<User>>(_deliveryContext.Users);
+            return _mapper.Map<List<PostalDto>>(users.FindAll(x=>x.UserType == UserType.Postal));
+        }
+
+        public string Login(LoginDto user)
         {
             List<User> users = _mapper.Map<List<User>>(_deliveryContext.Users);
             User databaseEntry = users.Find(x=>x.Email.Equals(user.Email));
             if(databaseEntry.Password.Equals(user.Password))
-                return true;
-            return false;
+                return databaseEntry.Id.ToString();
+            return "";
         }
 
         public void VerifyPostal(int id, bool yes)
