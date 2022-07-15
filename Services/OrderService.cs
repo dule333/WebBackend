@@ -34,10 +34,10 @@ namespace WebBackend.Services
                 Address = order.Address,
                 OrderProducts = new List<OrderProduct>()
             };
-
-            foreach (var item in order.products)    
+            OrderProduct orderProduct;
+            foreach (var item in order.OrderProducts)    
             {
-                OrderProduct orderProduct = new OrderProduct
+                orderProduct = new OrderProduct
                 {
                     OrderId = id,
                     Order = newOrder,
@@ -52,7 +52,8 @@ namespace WebBackend.Services
 
             _deliveryContext.Orders.Add(newOrder);
             _deliveryContext.SaveChanges();
-            return _mapper.Map<OrderDto>(newOrder);
+            order.Id = newOrder.Id;
+            return _mapper.Map<OrderDto>(order);
         }
 
         public OrderDto GetOrder(int orderId)

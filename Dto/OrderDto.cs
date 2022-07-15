@@ -12,7 +12,7 @@ namespace WebBackend.Dto
         public double TotalPrice { get; set; }
         public string Address { get; set; }
         [NotMapped]
-        public Dictionary<int,int> products { get; set; }
+        public Dictionary<int,int> OrderProducts { get; set; }
         public DeliveryStatus DeliveryStatus { get; set; }
         public DateTime EndTime { get; set; }
     }
