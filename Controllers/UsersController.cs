@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ namespace WebBackend.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "customer,postal,admin")]
         public IActionResult GetUser(int id)
         {
             return Ok(_userService.GetUser(id));
@@ -30,6 +32,7 @@ namespace WebBackend.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public IActionResult GetUsers()
         {
             return Ok(_userService.GetUsers());
@@ -44,10 +47,16 @@ namespace WebBackend.Controllers
         [HttpPost("login")]
         public IActionResult Login(LoginDto loginDto)
         {
-            return Ok(_userService.Login(loginDto));
+            string result = _userService.Login(loginDto);
+            if(result == "")
+            {
+                return NotFound();
+            }
+            return Ok(result);
         }
 
         [HttpGet("verify")]
+        [Authorize(Roles = "admin")]
         public IActionResult VerifyPostal(int id, bool yes)
         {
             _userService.VerifyPostal(id, yes);

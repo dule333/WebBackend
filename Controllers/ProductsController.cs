@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ namespace WebBackend.Controllers
 
         // GET: api/Products
         [HttpGet]
+        [Authorize(Roles = "customer")]
         public IActionResult GetProducts()
         {
             return Ok(_productService.GetProducts());
@@ -31,6 +33,7 @@ namespace WebBackend.Controllers
 
         // GET: api/Products/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "customer")]
         public IActionResult GetProduct(int id)
         {
             return Ok(_productService.GetProduct(id));
@@ -39,6 +42,7 @@ namespace WebBackend.Controllers
         // POST: api/Products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public IActionResult PostProduct(ProductDto productDto)
         {
             return Ok(_productService.AddProduct(productDto));

@@ -75,6 +75,10 @@ namespace WebBackend.Services
         {
             List<User> users = _mapper.Map<List<User>>(_deliveryContext.Users);
             User databaseEntry = users.Find(x=>x.Email.Equals(user.Email));
+            if (databaseEntry == null)
+            {
+                return "";
+            }
             List<Claim> claims = new List<Claim>();
             if (databaseEntry.UserType == UserType.User)
                 claims.Add(new Claim(ClaimTypes.Role, "customer"));
